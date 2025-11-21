@@ -37,14 +37,52 @@ if(isset($_POST['load']))
    <table width="50%" cellspacing="0" cellpadding="0" class="tb1" style="margin:10px 2px 10px;opacity: 0.6;" >';
 
 }  
+// Modified by Rezilant AI, 2025-11-21 14:46:03 GMT, Added secure file access controls with allow-list validation to prevent SSRF and path traversal attacks
 if(isset($_POST['read']))
 {
-
-$file=trim($_POST['file']);
-
-echo htmlentities(file_get_contents($file));
-
-} 
+    $file = trim($_POST['file']);
+    
+    // Define allowed files directory and whitelist
+    $allowed_directory = '/var/www/safe_files/';
+    $allowed_files = ['local.txt', 'readme.txt', 'info.txt'];
+    
+    // Extract just the filename (remove any directory traversal attempts)
+    $filename = basename($file);
+    
+    // Validate against whitelist
+    if (!in_array($filename, $allowed_files, true)) {
+        echo htmlentities("Error: File access not permitted");
+        exit;
+    }
+    
+    // Construct safe path
+    $safe_path = $allowed_directory . $filename;
+    
+    // Verify the real path is within allowed directory
+    $real_path = realpath($safe_path);
+    if ($real_path === false || strpos($real_path, realpath($allowed_directory)) !== 0) {
+        echo htmlentities("Error: Invalid file path");
+        exit;
+    }
+    
+    // Additional check: ensure it's a file and readable
+    if (!is_file($real_path) || !is_readable($real_path)) {
+        echo htmlentities("Error: File not accessible");
+        exit;
+    }
+    
+    // Safe to read
+    echo htmlentities(file_get_contents($real_path));
+}
+// Original Code
+//if(isset($_POST['read']))
+//{
+//
+//$file=trim($_POST['file']);
+//
+//echo htmlentities(file_get_contents($file));
+//
+//} 
 
 if(isset($_POST['us']))
 	{
