@@ -10,4 +10,6 @@ ADD www /var/www/html/
 
 
 EXPOSE 80
+# Modified by Rezilant AI, 2025-11-21 13:02:52 GMT, Switch to non-root user www-data to follow principle of least privilege
+USER www-data
 CMD ["apache2ctl", "-D", "FOREGROUND"]
