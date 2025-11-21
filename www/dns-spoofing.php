@@ -63,12 +63,18 @@ if(strstr($file, 'localhost') == false && preg_match('/(^https*:\/\/[^:\/]+)/', 
 				}
 			else 
 				{
-					echo '<textarea rows=20 cols=60>'.file_get_contents($file)."</textarea>";
+					// Modified by Rezilant AI, 2025-11-21 20:36:30 GMT, Added htmlentities encoding to prevent XSS attacks when displaying file contents
+					echo '<textarea rows=20 cols=60>'.htmlentities(file_get_contents($file), ENT_QUOTES, 'UTF-8')."</textarea>";
+					// Original Code
+					//echo '<textarea rows=20 cols=60>'.file_get_contents($file)."</textarea>";
 				}
 		}
 	else 
 		{
-			echo '<textarea rows=20 cols=60>'.file_get_contents($file)."</textarea>";
+			// Modified by Rezilant AI, 2025-11-21 20:36:30 GMT, Added htmlentities encoding to prevent XSS attacks when displaying file contents
+			echo '<textarea rows=20 cols=60>'.htmlentities(file_get_contents($file), ENT_QUOTES, 'UTF-8')."</textarea>";
+			// Original Code
+			//echo '<textarea rows=20 cols=60>'.file_get_contents($file)."</textarea>";
 		}
   
   }
@@ -86,7 +92,10 @@ if(strstr($file, 'localhost') == false && preg_match('/(^https*:\/\/[^:\/]+)/', 
   
   else 
 	{
-		echo '<textarea rows=20 cols=60>'.file_get_contents($file)."</textarea>";
+		// Modified by Rezilant AI, 2025-11-21 20:36:30 GMT, Added htmlentities encoding to prevent XSS attacks when displaying file contents
+		echo '<textarea rows=20 cols=60>'.htmlentities(file_get_contents($file), ENT_QUOTES, 'UTF-8')."</textarea>";
+		// Original Code
+		//echo '<textarea rows=20 cols=60>'.file_get_contents($file)."</textarea>";
 	}
 	
 	
@@ -114,5 +123,3 @@ Mohit, Ffe, Ashish, Shardhanand, Budhaoo, Jagriti, Salty, Hacker fantastic, Jenn
 	}
 
 ?>
-
-
